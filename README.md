@@ -1,5 +1,5 @@
-# Web3-Chess-Game
-Just a fun little project that i built a couple of years back. 
+# Web3Chess
+Just a fun little project.
 
 # Instructions
 
