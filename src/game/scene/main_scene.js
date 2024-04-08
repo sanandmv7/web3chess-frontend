@@ -244,6 +244,10 @@ const Chess = (props) => {
     }
   }
 
+  console.log(`activeBlocks: ${activeBlocks}`);
+  console.log(`playerColor: ${playerColor}`);
+  console.log(`positions: ${positions}`);
+
   return (
     <>
       <Suspense fallback={<></>}>
