@@ -196,6 +196,9 @@ const Chess = (props) => {
     interactionSocket = s;
   }
 
+  console.log(`props.practiceGame: ${props.practiceGame}`);
+  console.log(`gameStarted: ${gameStarted}`);
+
   if (props.practiceGame && !gameStarted) {
     console.log("Practice Game");
     setChess({ gameStarted: true, playerColor: Colors.WHITE });
