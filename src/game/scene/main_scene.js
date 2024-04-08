@@ -206,6 +206,7 @@ const Chess = (props) => {
   }
 
   const handleBlockClick = (n) => {
+    console.log(`props.isBetting: ${props.isBetting}`);
     if (!props.isBetting) {
       performMove(selectedPiece, n);
       if (!props.practiceGame) {
