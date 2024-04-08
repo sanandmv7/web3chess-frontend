@@ -57,10 +57,7 @@ const Chess = (props) => {
   useEffect(() => {
     return resetChessStore;
   }, []);
-  if (!game) {
-    let g = new Game();
-    setChess({ game: g });
-  }
+
   const colorCallback = (c) => {
     setChess({ playerColor: parseInt(c), gameStarted: true });
   };
@@ -241,6 +238,11 @@ const Chess = (props) => {
     } else {
       return <WinLostPage title="You Lost." />;
     }
+  }
+
+  if (!game) {
+    let g = new Game();
+    setChess({ game: g });
   }
 
   return (
