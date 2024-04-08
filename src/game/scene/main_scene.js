@@ -66,6 +66,7 @@ const Chess = (props) => {
   };
 
   const handlePieceClick = (n) => {
+    console.log(`props.isBetting: ${props.isBetting}`);
     if (!props.isBetting) {
       let moves = game.moves(n);
       let aB = moves.map((x, i) => {
