@@ -197,6 +197,7 @@ const Chess = (props) => {
   }
 
   if (props.practiceGame && !gameStarted) {
+    console.log("Practice Game");
     setChess({ gameStarted: true, playerColor: Colors.WHITE });
   }
 
