@@ -57,7 +57,10 @@ const Chess = (props) => {
   useEffect(() => {
     return resetChessStore;
   }, []);
-
+  if (!game) {
+    let g = new Game();
+    setChess({ game: g });
+  }
   const colorCallback = (c) => {
     setChess({ playerColor: parseInt(c), gameStarted: true });
   };
@@ -138,6 +141,7 @@ const Chess = (props) => {
   };
 
   if (!interactionSocket && !props.practiceGame) {
+    console.log(`!interactionSocket && !props.practiceGame`);
     /*let intsoc =interactionSocket new SocketInteraction(
 			props.gameCode,
 			props.pubKey,
@@ -240,11 +244,6 @@ const Chess = (props) => {
     }
   }
 
-  if (!game) {
-    let g = new Game();
-    setChess({ game: g });
-  }
-
   return (
     <>
       <Suspense fallback={<></>}>
@@ -272,14 +271,16 @@ const Chess = (props) => {
           </group>
         </Canvas>
       </Suspense>
-      <div className="fixed bottom-10 right-10 ">
-        <Chat
-          pubKey={props.pubKey}
-          gameCode={props.gameCode}
-          isBlack={playerColor == Colors.BLACK}
-          isWhite={playerColor == Colors.WHITE}
-        />
-      </div>
+      {!props.practiceGame && (
+        <div className="fixed bottom-10 right-10 ">
+          <Chat
+            pubKey={props.pubKey}
+            gameCode={props.gameCode}
+            isBlack={playerColor == Colors.BLACK}
+            isWhite={playerColor == Colors.WHITE}
+          />
+        </div>
+      )}
     </>
   );
 };
