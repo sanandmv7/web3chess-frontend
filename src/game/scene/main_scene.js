@@ -222,7 +222,7 @@ const Chess = (props) => {
     }
   };
 
-  if (!gameStarted) {
+  if (!props.practiceGame && !gameStarted) {
     return <WaitingPage />;
   }
 
