@@ -56,3 +56,12 @@ node server.js
 * Select the repository
 * Fill in Site name and Add environment variable CI=False
 * Click on Deploy button
+
+## How to update the game smart contract address to your contract's address
+
+* Copy the contents of `Chess.sol` from the contracts folder
+* Go to Remix and create a new .sol file
+* Paste the contents
+* Compile and Deploy the contract to Polygon Testnet
+* Copy the deployed contract address
+* Go to src/build.eth/contracts/Chess.json file and paste the copied contract address under "networks":"80001":"address" attribute(or just search for the current address "0x8481ABc4f59F541a9610Ac93Eb5583F881AF9dB4" and replace it with new address)
