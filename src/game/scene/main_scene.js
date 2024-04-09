@@ -265,12 +265,12 @@ const Chess = (props) => {
             <Board
               active={activeBlocks}
               handleBlockClick={handleBlockClick}
-              playerColor={playerColor}
+              playerColor={playerColor === null? 0 : playerColor}
             />
             <Setup
               positions={positions}
               handlePieceClick={handlePieceClick}
-              playerColor={playerColor}
+              playerColor={playerColor === null? 0 : playerColor}
             />
           </group>
         </Canvas>
