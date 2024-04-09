@@ -66,7 +66,7 @@ const Chess = (props) => {
   };
 
   const handlePieceClick = (n) => {
-    console.log(`props.isBetting: ${props.isBetting}`);
+    // console.log(`props.isBetting: ${props.isBetting}`);
     if (!props.isBetting) {
       let moves = game.moves(n);
       let aB = moves.map((x, i) => {
@@ -141,7 +141,7 @@ const Chess = (props) => {
   };
 
   if (!interactionSocket && !props.practiceGame) {
-    console.log(`!interactionSocket && !props.practiceGame`);
+    // console.log(`!interactionSocket && !props.practiceGame`);
     /*let intsoc =interactionSocket new SocketInteraction(
 			props.gameCode,
 			props.pubKey,
@@ -198,8 +198,8 @@ const Chess = (props) => {
     interactionSocket = s;
   }
 
-  console.log(`props.practiceGame: ${props.practiceGame}`);
-  console.log(`gameStarted: ${gameStarted}`);
+  // console.log(`props.practiceGame: ${props.practiceGame}`);
+  // console.log(`gameStarted: ${gameStarted}`);
 
   if (props.practiceGame && !gameStarted) {
     console.log("Practice Game");
@@ -207,7 +207,7 @@ const Chess = (props) => {
   }
 
   const handleBlockClick = (n) => {
-    console.log(`props.isBetting: ${props.isBetting}`);
+    // console.log(`props.isBetting: ${props.isBetting}`);
     if (!props.isBetting) {
       performMove(selectedPiece, n);
       if (!props.practiceGame) {
@@ -244,9 +244,9 @@ const Chess = (props) => {
     }
   }
 
-  console.log(`activeBlocks: ${activeBlocks}`);
-  console.log(`playerColor: ${playerColor}`);
-  console.log(`positions: ${positions}`);
+  // console.log(`activeBlocks: ${activeBlocks}`);
+  // console.log(`playerColor: ${playerColor}`);
+  // console.log(`positions: ${positions}`);
 
   return (
     <>
