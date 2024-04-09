@@ -230,6 +230,14 @@ const Chess = (props) => {
   }
 
   if (gameEnded) {
+    if(!props.practiceGame) {
+      if(interactionSocket) {
+        interactionSocket.send(
+          `gameOver${MSG_DELIM}${props.gameCode}`
+        );
+      }
+    }
+    
     if (props.isBetting) {
       return (
         <WinLostPage
