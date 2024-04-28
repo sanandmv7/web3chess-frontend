@@ -25714,10 +25714,10 @@
     "version": "0.8.10+commit.fc410830.Emscripten.clang"
   },
   "networks": {
-    "80001": {
+    "80002": {
       "events": {},
       "links": {},
-      "address": "0x8481ABc4f59F541a9610Ac93Eb5583F881AF9dB4",
+      "address": "0xCeAFE462C32F6aC071f7113A9AF6465f798fb24b",
       "transactionHash": "0xd23d7374d48fe56f57625d425df6c782d3c7aa3f6b402f34348be1f7f9a06b8e"
     }
   },

@@ -1,4 +1,4 @@
-import React, { useRef, Suspense, useContext, useEffect } from "react";
+import React, { useRef, Suspense, useContext, useEffect, useState } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Board from "./board";
@@ -16,6 +16,7 @@ import Store from "../../utils/Store";
 import { observer } from "mobx-react-lite";
 import WaitingPage from "../../pages/WaitingPage";
 import WinLostPage from "../../pages/WinLostPage";
+import GameEndedPage from "../../pages/GameEndedPage";
 import Chat from "../../components/Chat";
 import { Color } from "three";
 import { webSocketURL } from "../../utils/const";
@@ -42,6 +43,7 @@ const CameraControls = () => {
 };
 const Chess = (props) => {
   const { chess, setChess, resetChessStore } = useContext(Store);
+  const [isCheckmate, setIsCheckMate] = useState(false);
   const {
     positions,
     activeBlocks,
@@ -130,14 +132,17 @@ const Chess = (props) => {
       console.log("check");
     }
 
-    if (json["checkMate"]) {
+    if(json["isFinished"]) {
       setChess({ gameEnded: true });
-      if (json["turn"] === "black") {
-        setChess({ winner: Colors.WHITE });
-      } else {
-        setChess({ winner: Colors.BLACK });
+      if (json["checkMate"]) {
+        setIsCheckMate(true);
+        if (json["turn"] === "black") {
+          setChess({ winner: Colors.WHITE });
+        } else {
+          setChess({ winner: Colors.BLACK });
+        }
       }
-    }
+    }    
   };
 
   if (!interactionSocket && !props.practiceGame) {
@@ -230,25 +235,21 @@ const Chess = (props) => {
   }
 
   if (gameEnded) {
-    if(!props.practiceGame) {
-      if(interactionSocket) {
-        interactionSocket.send(
-          `gameOver${MSG_DELIM}${props.gameCode}`
+    if(isCheckmate) {
+      if (props.isBetting) {
+        return (
+          <WinLostPage
+            title={`${winner === Colors.BLACK ? "Black" : "White"} won.`}
+          />
         );
       }
-    }
-    
-    if (props.isBetting) {
-      return (
-        <WinLostPage
-          title={`${winner === Colors.BLACK ? "Black" : "White"} won.`}
-        />
-      );
-    }
-    if (playerColor === winner) {
-      return <WinLostPage title="You Win. Reward Amount transferred" />;
+      if (playerColor === winner) {
+        return <WinLostPage title="You Win. Reward Amount transferred" />;
+      } else {
+        return <WinLostPage title="You Lost." />;
+      }
     } else {
-      return <WinLostPage title="You Lost." />;
+      return <GameEndedPage />;
     }
   }
 
