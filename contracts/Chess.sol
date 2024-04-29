@@ -5,7 +5,7 @@ contract Chess {
     uint256 public gameID;
     address public owner;
 
-    uint256 public minWagerAmount = 0.001 ether;
+    uint256 public minWagerAmount = 0.01 ether;
     uint256 public feePercentageBPS = 200; // 2% of bet amount
 
     struct Game {
@@ -33,18 +33,13 @@ contract Chess {
         owner = newOwner;
     }
 
-    // newFeePercentage should be in BPS
-    function changeFeePercentage(uint256 newFeePercentage) external onlyOwner {
-        feePercentageBPS = newFeePercentage;
-    }
-
     // newMinBetAmount should be in Wei
     function changeMinBetAmount(uint256 newMinBetAmount) external onlyOwner {
         minWagerAmount = newMinBetAmount;
     }
 
     function newGame() public payable {
-        require(msg.value > minWagerAmount, "Invalid Bet Amount");
+        require(msg.value >= minWagerAmount, "Invalid Bet Amount");
 
         uint256 feeAmount = (msg.value * feePercentageBPS) / 10000;
         payable(owner).transfer(feeAmount);
@@ -80,7 +75,6 @@ contract Chess {
         require(!GameInfo[game].finished);
         require(GameInfo[game].amountBet != 0, "Game does not exist");
         require(GameInfo[game].winner == address(0));
-        require(msg.sender == owner);
         require(
             winner == GameInfo[game].player1 ||
                 winner == GameInfo[game].player2,
@@ -96,6 +90,25 @@ contract Chess {
             value: (2 * (GameInfo[game].amountBet - feeAmount))
         }("");
         require(success, "Failed to send");
+    }
+
+    function returnWagers(uint256 gameId) public onlyOwner {
+        require(!GameInfo[gameId].finished);
+        require(GameInfo[gameId].amountBet != 0, "Game does not exist");
+        require(GameInfo[gameId].winner == address(0));
+        GameInfo[gameId].finished = true;
+        uint256 feeAmount = (GameInfo[gameId].amountBet * feePercentageBPS) /
+            10000;
+        
+        (bool success1, ) = GameInfo[gameId].player1.call{
+            value: (GameInfo[gameId].amountBet - feeAmount)
+        }("");
+        require(success1, "Failed to send to player 1");
+
+        (bool success2, ) = GameInfo[gameId].player2.call{
+            value: (GameInfo[gameId].amountBet - feeAmount)
+        }("");
+        require(success2, "Failed to send to player 2");
     }
 
     function getGames(address user) public view returns (uint256[] memory) {
